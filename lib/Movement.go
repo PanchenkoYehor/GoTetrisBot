@@ -1,4 +1,4 @@
-package library
+package lib
 
 func RotateInField(field Field, left int, rotates int) Field {
 
