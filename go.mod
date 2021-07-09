@@ -1,3 +1,1 @@
-module github.com/PanchenkoYehor/TetrisBot
-
-go 1.15
+module "TetrisBot"

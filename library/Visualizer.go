@@ -1,39 +1,51 @@
 package library
 
 import (
-	"html/template"
+	"fmt"
 	"net/http"
+	"time"
 )
 
-type ViewData struct{
-
+type ViewData struct {
 	Title string
 	Users []string
 }
 
-func Visualize(field Field) {
-	//mux := http.NewServeMux()
+var Pane = Field{}
 
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+func Calculate() {
 
-		tmpl, _ := template.ParseFiles("templates/index.html")
-		tmpl.Execute(w, field)
-	})
-	http.ListenAndServe(":8181", nil)
-	
-	//http.PostForm(":8181", url.Values{"key": {"val"}, "id" : {"123"}})
-	//router := gin.Default()
+	SetFigures()
 
-	/*data := ViewData{
-		Title : "Users List",
-		Users : []string{ "Tom", "Bob", "Sam"},
+	for i := 0; i < 24; i++ {
+		for j := 0; j < 10; j++ {
+			Pane[i][j] = 0
+		}
 	}
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 
-		tmpl, _ := template.ParseFiles("templates/index.html")
-		tmpl.Execute(w, data)
-	})
+	for t := 0; t <= 10; t++ {
+		var howLeft int
+		var fig Block
+		Pane, howLeft, fig = SetRandomFigureOnTheField(Pane)
+		var rotate, shift = FindBestWay(Pane, howLeft, fig)
+		Pane = ShiftInField(Pane, 3-howLeft)
+		Pane = RotateInField(Pane, 3, rotate)
+		Pane = ShiftInField(Pane, shift)
+		Pane = MoveDownUntilEnd(Pane)
 
-	fmt.Println("Server is listening...")
-	http.ListenAndServe(":8181", nil)*/
+		/*for {
+			//MoveDown
+			//Visualize Pane
+			//Break if no changes
+		}*/
+		//if there is a figure in 21-th line then break
+		fmt.Println("after")
+		callServer()
+		//Visualize(Pane)
+		time.Sleep(1 * time.Second)
+	}
+}
+
+func callServer() {
+	http.Get("http://localhost:8181/")
 }
