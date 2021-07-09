@@ -1,13 +1,12 @@
 package main
 
 import (
-	"TetrisBot/library"
 	"fmt"
+	"github.com/PanchenkoYehor/TetrisBot/library"
 	"time"
 )
 
-type ViewData struct{
-
+type ViewData struct {
 	Title string
 	Users []string
 }
@@ -30,7 +29,7 @@ func main() {
 		var rotate, shift = library.FindBestWay(field, howLeft, fig)
 		//library.Visualize(field)
 		//library.Visualize(field)
-		field = library.ShiftInField(field, 3 - howLeft)
+		field = library.ShiftInField(field, 3-howLeft)
 		//library.Visualize(field)
 		field = library.RotateInField(field, 3, rotate)
 		//library.Visualize(field)
