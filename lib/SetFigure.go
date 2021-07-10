@@ -1,23 +1,25 @@
 package lib
 
 import (
-	"fmt"
 	"math/rand"
+	"time"
 )
 
-type Field[25][10]int
-type Block[4][4]int
+type Field [25][10]int
+type Block [4][4]int
 
 var Figures = [7]Block{}
 
+var NumberOfLines = 0
+
 func SetFigures() {
 	Figures[0] = Block{{1, 0, 0, 0}, {1, 0, 0, 0}, {1, 0, 0, 0}, {1, 0, 0, 0}} // I
-	Figures[1] = Block{{0, 0, 0, 0}, {0, 0, 0, 0}, {1, 0, 0, 0}, {1, 1, 1, 0}} // J
-	Figures[2] = Block{{0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 1, 0}, {1, 1, 1, 0}} // L
-	Figures[3] = Block{{0, 0, 0, 0}, {0, 0, 0, 0}, {1, 1, 0, 0}, {1, 1, 0, 0}} // O
-	Figures[4] = Block{{0, 0, 0, 0}, {0, 0, 0, 0}, {0, 1, 1, 0}, {1, 1, 0, 0}} // S
-	Figures[5] = Block{{0, 0, 0, 0}, {0, 0, 0, 0}, {0, 1, 0, 0}, {1, 1, 1, 0}} // T
-	Figures[6] = Block{{0, 0, 0, 0}, {0, 0, 0, 0}, {1, 1, 0, 0}, {0, 1, 1, 0}} // Z
+	Figures[1] = Block{{1, 0, 0, 0}, {1, 1, 1, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}} // J
+	Figures[2] = Block{{0, 0, 1, 0}, {1, 1, 1, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}} // L
+	Figures[3] = Block{{1, 1, 0, 0}, {1, 1, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}} // O
+	Figures[4] = Block{{0, 1, 1, 0}, {1, 1, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}} // S
+	Figures[5] = Block{{0, 1, 0, 0}, {1, 1, 1, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}} // T
+	Figures[6] = Block{{1, 1, 0, 0}, {0, 1, 1, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}} // Z
 }
 
 func ApplyRotate(figure Block, rotate int) Block {
@@ -25,7 +27,7 @@ func ApplyRotate(figure Block, rotate int) Block {
 		var temp = Block{}
 		for i := 0; i < 4; i++ {
 			for j := 0; j < 4; j++ {
-				temp[3 - j][i] = figure[i][j]
+				temp[3-j][i] = figure[i][j]
 			}
 		}
 		figure = temp
@@ -63,7 +65,7 @@ func MoveLeft(figure Block) Block {
 	for i := 0; i < 4; i++ {
 		for j := 0; j < 4; j++ {
 			if figure[i][j] == 1 {
-				temp[i][j - mnj] = 1
+				temp[i][j-mnj] = 1
 			}
 		}
 	}
@@ -72,23 +74,41 @@ func MoveLeft(figure Block) Block {
 }
 
 func SetRandomFigureOnTheField(field Field) (Field, int, Block) {
+	rand.Seed(time.Now().UTC().UnixNano())
 	var randIndex = int(rand.Int31n(7))
 	var randRotate = int(rand.Int31n(4))
 	var figure = ApplyRotate(Figures[randIndex], randRotate)
 	figure = MoveLeft(figure)
 	var diameter = Diameter(figure)
 	var left = int(rand.Int31n(int32(11 - diameter)))
-	fmt.Println(figure)
+	/*fmt.Println(figure)
 	fmt.Println(diameter)
-	fmt.Println(left)
+	fmt.Println(left)*/
 
 	for i := 0; i < 4; i++ {
 		for j := 0; j < 4; j++ {
-			if left + j < 10 {
-				field[i][left + j] = figure[i][j]
+			if left+j < 10 {
+				field[i][left+j] = figure[i][j]
 			}
 		}
 	}
 
 	return field, left, figure
+}
+
+func Abs(x int) int {
+	if x < 0 {
+		return -x
+	}
+	return x
+}
+
+func Sign(x int) int {
+	if x < 0 {
+		return -1
+	}
+	if x > 0 {
+		return 1
+	}
+	return 0
 }

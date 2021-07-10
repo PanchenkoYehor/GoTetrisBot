@@ -1,12 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" http-equiv="refresh" content="1">
-    <title>A few good men</title>
+    <meta charset="UTF-8" http-equiv="refresh" content="0.15">
+    <title>Tetris Bot by Yehor</title>
 </head>
+<STYLE TYPE=”text/css”>
+    <!--
+    .twentysixpoint {line-height: 10pt;
+        margin : 0}
+    -->
+</STYLE>
 <body>
+<h1>Count of destroyed lines: {{.Lines}}</h1>
 <ul>
-    {{range $index, $element := .}}
+    {{range $index, $element := .Pitch}}
     <li>{{$element}}</li>
     {{end}}
 </ul>

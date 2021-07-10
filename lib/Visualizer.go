@@ -1,17 +1,13 @@
 package lib
 
 import (
-	"fmt"
 	"net/http"
 	"time"
 )
 
-type ViewData struct {
-	Title string
-	Users []string
-}
-
 var Pane = Field{}
+
+var delay = time.Millisecond * 50
 
 func Calculate() {
 
@@ -23,26 +19,73 @@ func Calculate() {
 		}
 	}
 
-	for t := 0; t <= 10; t++ {
+	for {
 		var howLeft int
 		var fig Block
 		Pane, howLeft, fig = SetRandomFigureOnTheField(Pane)
 		var rotate, shift = FindBestWay(Pane, howLeft, fig)
-		Pane = ShiftInField(Pane, 3-howLeft)
-		Pane = RotateInField(Pane, 3, rotate)
-		Pane = ShiftInField(Pane, shift)
-		Pane = MoveDownUntilEnd(Pane)
 
-		/*for {
-			//MoveDown
-			//Visualize Pane
-			//Break if no changes
-		}*/
-		//if there is a figure in 21-th line then break
-		fmt.Println("after")
+		//Pane = ShiftInField(Pane, 3 - howLeft)
+		for t := 0; t < Abs(3-howLeft); t++ {
+			Pane = ShiftInFieldByOne(Pane, 3-howLeft)
+			callServer()
+			time.Sleep(delay)
+		}
+
+		//Pane = RotateInField(Pane, 3, rotate)
+		for t := 0; t < rotate; t++ {
+			Pane = RotateInField(Pane, 3, 1)
+			callServer()
+			time.Sleep(delay)
+		}
+
+		//Pane = ShiftInField(Pane, shift)
+		for t := 0; t < Abs(shift); t++ {
+			Pane = ShiftInFieldByOne(Pane, shift)
+			callServer()
+			time.Sleep(delay)
+		}
+
+		//Pane = MoveDownUntilEnd(Pane)
+		cnt := MoveDownUntilEndCount(Pane)
+
+		for i := 0; i < 4; i++ {
+			for j := 0; j < 10; j++ {
+				if Pane[i][j] == 1 {
+					Pane[i][j] = 2
+				}
+			}
+		}
+
+		for t := 0; t < cnt; t++ {
+			Pane = MoveByOne(Pane)
+			callServer()
+			time.Sleep(delay)
+		}
+
+		for i := 0; i < 24; i++ {
+			for j := 0; j < 10; j++ {
+				if Pane[i][j] == 2 {
+					Pane[i][j] = 1
+				}
+			}
+		}
+
+		Pane = DestroyLines(Pane, true)
 		callServer()
+		time.Sleep(delay)
+
 		//Visualize(Pane)
-		time.Sleep(1 * time.Second)
+		/*fmt.Println("after")
+		rectImage := image.NewRGBA(image.Rect(0, 0, 200, 200))
+		green := color.RGBA{0, 100, 0, 255}
+
+		draw.Draw(rectImage, rectImage.Bounds(), &image.Uniform{green}, image.ZP, draw.Src)
+
+		callServer()
+		time.Sleep(1 * time.Second)*/
+		/*callServer()
+		time.Sleep(delay)*/
 	}
 }
 
