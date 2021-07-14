@@ -2,7 +2,7 @@
 
 ## How to run?
 
-As usually in go
+As usual in "Golang"
 
 `go get github.com/PanchenkoYehor/GoTetrisBot` 
 
