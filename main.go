@@ -1,19 +1,15 @@
 package main
 
 import (
-	"TetrisBotKost/lib"
 	"flag"
 	"fmt"
+	"github.com/PanchenkoYehor/GoTetrisBot/lib"
 	"html/template"
+	"log"
 	"net/http"
 	"os/exec"
 	"runtime"
 )
-
-type ViewData struct {
-	Title string
-	Users []string
-}
 
 type ToServer struct {
 	Lines int
@@ -25,7 +21,7 @@ func transform(field lib.Field) [24]string {
 
 	for i := 0; i < 24; i++ {
 
-		var temp string = "|"
+		var temp = "|"
 		for j := 0; j < 10; j++ {
 			if field[i][j] == 0 {
 				//temp += "----"
@@ -43,36 +39,60 @@ func transform(field lib.Field) [24]string {
 }
 
 func modifyTemplate(w http.ResponseWriter, field ToServer) {
-	tmpl, _ := template.ParseFiles("templates/index.html")
-	_ = tmpl.Execute(w, field)
+	tmpl, err := template.ParseFiles("github.com/PanchenkoYehor/GoTetrisBot/index.html")
+	if err != nil {
+		fmt.Printf(err.Error())
+		return
+	}
+	if tmpl == nil {
+		fmt.Printf("Wrong with tmpl\n")
+		return
+	}
+	if err := tmpl.Execute(w, field); err != nil {
+		fmt.Printf(err.Error())
+	}
 	//_ = tmpl.Execute(w, lib.Pane)
 }
 
 var port int
 var autoOpen bool
 
-func processFlags() {
+func processFlags() error {
 
 	// General flags
 	flag.IntVar(&port, "port", 8181, "Port to start the UI web server on; valid range: 0..65535")
 	flag.BoolVar(&autoOpen, "autoOpen", true, "Auto-opens the UI web page in the default browser")
 	flag.Parse()
+
+	if port < 0 || port > 65535 {
+		return fmt.Errorf("port %d is outside of valid range", port)
+	}
+
+	return nil
 }
 
 func main() {
 
 	runtime.GOMAXPROCS(runtime.NumCPU())
 	//mux := http.NewServeMux()
-	processFlags()
+	if err := processFlags(); err != nil {
+		fmt.Println(err)
+		flag.Usage()
+		return
+	}
+
 	url := fmt.Sprintf("http://localhost:%d/", port)
-	open(url)
+	if err := open(url); err != nil {
+		fmt.Println("Auto-open failed:", err)
+		fmt.Printf("Open %s in your browser.\n", url)
+	}
 
 	go lib.Calculate()
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		//fmt.Println("Calling GET")
 		modifyTemplate(w, ToServer{lib.NumberOfLines, transform(lib.Pane)})
 	})
-	_ = http.ListenAndServe(fmt.Sprintf(":%d", port), nil)
+	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%d", port), nil))
 }
 
 func open(url string) error {
