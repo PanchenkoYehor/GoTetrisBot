@@ -39,11 +39,12 @@ func transform(field lib.Field) [24]string {
 }
 
 func modifyTemplate(w http.ResponseWriter, field ToServer) {
-	tmpl, err := template.ParseFiles("index.html")
+	/*tmpl, err := template.ParseFiles("index.html")
 	if err != nil {
 		fmt.Printf(err.Error())
 		return
-	}
+	}*/
+	var tmpl = template.Must(template.New("t").Parse(lib.help_html))
 	if tmpl == nil {
 		fmt.Printf("Wrong with tmpl\n")
 		return

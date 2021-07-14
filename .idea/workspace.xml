@@ -3,7 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="0e623373-41a3-489c-bf70-4e0185044235" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/Visualizer.go" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Visualizer.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -183,10 +183,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="529" y="214" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1536.824/1920.0.864.1496@0.0.1536.824" timestamp="1625828883301" />
-    <state x="393" y="0" key="CommitChangelistDialog2" timestamp="1626249251881">
+    <state x="393" y="0" key="CommitChangelistDialog2" timestamp="1626250097417">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="393" y="0" key="CommitChangelistDialog2/0.0.1536.824/1920.0.864.1496@0.0.1536.824" timestamp="1626249251881" />
+    <state x="393" y="0" key="CommitChangelistDialog2/0.0.1536.824/1920.0.864.1496@0.0.1536.824" timestamp="1626250097417" />
     <state x="639" y="310" key="Github.ShareDialog" timestamp="1625900371099">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -220,10 +220,10 @@
     </state>
     <state x="0" y="115" key="SettingsEditor/0.0.1536.824/1920.0.864.1496@0.0.1536.824" timestamp="1625828844851" />
     <state x="1920" y="394" key="SettingsEditor/0.0.1536.824/1920.0.864.1496@1920.0.864.1496" timestamp="1625828769499" />
-    <state x="361" y="145" key="Vcs.Push.Dialog.v2" timestamp="1626249258910">
+    <state x="361" y="145" key="Vcs.Push.Dialog.v2" timestamp="1626250105471">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824/1920.0.864.1496@0.0.1536.824" timestamp="1626249258910" />
+    <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824/1920.0.864.1496@0.0.1536.824" timestamp="1626250105471" />
     <state x="1554" y="302" width="1157" height="705" maximized="true" key="dock-window-1" timestamp="1625833314503">
       <screen x="1920" y="0" width="864" height="1496" />
     </state>
