@@ -2,6 +2,8 @@ package main
 
 import (
 	"TetrisBotKost/lib"
+	"flag"
+	"fmt"
 	"html/template"
 	"net/http"
 	"os/exec"
@@ -46,16 +48,31 @@ func modifyTemplate(w http.ResponseWriter, field ToServer) {
 	//_ = tmpl.Execute(w, lib.Pane)
 }
 
+var port int
+var autoOpen bool
+
+func processFlags() {
+
+	// General flags
+	flag.IntVar(&port, "port", 8181, "Port to start the UI web server on; valid range: 0..65535")
+	flag.BoolVar(&autoOpen, "autoOpen", true, "Auto-opens the UI web page in the default browser")
+	flag.Parse()
+}
+
 func main() {
+
+	runtime.GOMAXPROCS(runtime.NumCPU())
 	//mux := http.NewServeMux()
-	open("http://localhost:8181/")
+	processFlags()
+	url := fmt.Sprintf("http://localhost:%d/", port)
+	open(url)
 
 	go lib.Calculate()
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		//fmt.Println("Calling GET")
 		modifyTemplate(w, ToServer{lib.NumberOfLines, transform(lib.Pane)})
 	})
-	_ = http.ListenAndServe(":8181", nil)
+	_ = http.ListenAndServe(fmt.Sprintf(":%d", port), nil)
 }
 
 func open(url string) error {
