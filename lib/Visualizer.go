@@ -1,6 +1,7 @@
 package lib
 
 import (
+	"fmt"
 	"net/http"
 	"time"
 )
@@ -90,5 +91,7 @@ func Calculate() {
 }
 
 func callServer() {
-	http.Get("http://localhost:8181/")
+	if _, err := http.Get("http://localhost:8181/"); err != nil {
+		fmt.Printf("Bad with callServer\n")
+	}
 }

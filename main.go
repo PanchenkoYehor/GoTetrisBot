@@ -39,7 +39,7 @@ func transform(field lib.Field) [24]string {
 }
 
 func modifyTemplate(w http.ResponseWriter, field ToServer) {
-	tmpl, err := template.ParseFiles("github.com/PanchenkoYehor/GoTetrisBot/index.html")
+	tmpl, err := template.ParseFiles("index.html")
 	if err != nil {
 		fmt.Printf(err.Error())
 		return
@@ -54,18 +54,18 @@ func modifyTemplate(w http.ResponseWriter, field ToServer) {
 	//_ = tmpl.Execute(w, lib.Pane)
 }
 
-var port int
+var Port int
 var autoOpen bool
 
 func processFlags() error {
 
 	// General flags
-	flag.IntVar(&port, "port", 8181, "Port to start the UI web server on; valid range: 0..65535")
+	flag.IntVar(&Port, "Port", 8181, "Port to start the UI web server on; valid range: 0..65535")
 	flag.BoolVar(&autoOpen, "autoOpen", true, "Auto-opens the UI web page in the default browser")
 	flag.Parse()
 
-	if port < 0 || port > 65535 {
-		return fmt.Errorf("port %d is outside of valid range", port)
+	if Port < 0 || Port > 65535 {
+		return fmt.Errorf("Port %d is outside of valid range", Port)
 	}
 
 	return nil
@@ -81,7 +81,7 @@ func main() {
 		return
 	}
 
-	url := fmt.Sprintf("http://localhost:%d/", port)
+	url := fmt.Sprintf("http://localhost:%d/", Port)
 	if err := open(url); err != nil {
 		fmt.Println("Auto-open failed:", err)
 		fmt.Printf("Open %s in your browser.\n", url)
@@ -92,7 +92,7 @@ func main() {
 		//fmt.Println("Calling GET")
 		modifyTemplate(w, ToServer{lib.NumberOfLines, transform(lib.Pane)})
 	})
-	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%d", port), nil))
+	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%d", Port), nil))
 }
 
 func open(url string) error {
