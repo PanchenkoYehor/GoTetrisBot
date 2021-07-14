@@ -38,13 +38,28 @@ func transform(field lib.Field) [24]string {
 	return ar
 }
 
+const help_html = `<html lang="en">
+<head>
+<meta charset="UTF-8" http-equiv="refresh" content="0.15">
+<title>Tetris Bot by Yehor</title>
+</head>
+<body>
+<h1>Count of destroyed lines: {{.Lines}}</h1>
+<ul>
+{{range $index, $element := .Pitch}}
+<li>{{$element}}</li>
+{{end}}
+</ul>
+</body>
+</html>`
+
 func modifyTemplate(w http.ResponseWriter, field ToServer) {
 	/*tmpl, err := template.ParseFiles("index.html")
 	if err != nil {
 		fmt.Printf(err.Error())
 		return
 	}*/
-	var tmpl = template.Must(template.New("t").Parse(lib.help_html))
+	var tmpl = template.Must(template.New("t").Parse(help_html))
 	if tmpl == nil {
 		fmt.Printf("Wrong with tmpl\n")
 		return
