@@ -2,7 +2,9 @@
 
 ## How to run?
 
-As usual in "Golang"
+The first step is to installation Go from https://golang.org/doc/install.
+
+Then, as usual in "Golang"
 
 `go get github.com/PanchenkoYehor/GoTetrisBot` 
 
@@ -12,8 +14,4 @@ Then run
 
 ## What's the problem?
 
-The problem is that you maybe couldn't run code by the way like above. I don't know how to resolve it and need some help.
-
-You could try to download all project and run it on your PC. That should work.
-
-In any case, you could write me, and we will try to think together what to do)
+If it **does not** work, you have the other settings of command line than mine. You could move to the directory "*User*", then "*User's name*", than "*go*" and "*bin*". There you will see the executable file "*GoTetrisBot.exe*". Just execute him directly by double clicking.
