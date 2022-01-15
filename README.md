@@ -14,4 +14,4 @@ Then run
 
 ## What's the problem?
 
-If it **does not** work, you have the other command line settings than mine. You could move to the directory "*User*", then "*User's name*", then "*go*" and "*bin*". There you will see the executable file "*GoTetrisBot.exe*". Just execute him directly by double-clicking.
+If it **does not** work, you have the other command line settings than mine. You could move to the directory "*User*", then "*User's name*", then "*go*" and "*bin*". There you will see the executable file "*GoTetrisBot.exe*". Just execute this file by double-clicking.
